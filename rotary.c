@@ -22,8 +22,6 @@
 #include "driver/pcnt.h"
 #include "rotary.h"
 
-#include "settings.h"
-
 static const char *TAG = "ROTARY";
 
 // manual rotary encoder value implementation, due to bug
@@ -113,7 +111,7 @@ static void __attribute__((__unused__)) ec11_pcnt_overflow_handler(void *arg)
     uint32_t status = 0;
 
     // ignore interrupt when a button is pressed
-    if( settingsV.button_pressed ) return;
+    //if( settingsV.button_pressed ) return;
 
     pcnt_get_event_status(ec11->pcnt_unit, &status);
     

@@ -25,8 +25,6 @@
 #include "driver/rmt.h"
 #include "driver/rtc_io.h"
 
-#include "settings.h"
-
 #include "ws2812.h"
 
 static const char *TAG = "RMT";
