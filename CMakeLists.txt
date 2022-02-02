@@ -2,6 +2,7 @@
 list( APPEND GENSRCS 
     "iot_light.c"
     "i2c.c"
+    "i2c_bus.c"
     "spi.c"
     "rotary.c"
     "ws2812.c"
