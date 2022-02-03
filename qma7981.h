@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include "esp_err.h"
 
+#define GPIO_INPUT_ACCEL_INT1 (GPIO_NUM_26)
+
 #ifdef __cplusplus
 extern "C" {
 #endif

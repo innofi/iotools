@@ -5,7 +5,7 @@
  * @date 2021-09-01
  * 
  * @copyright Copyright (c) 2021
- * 
+ * original: https://github.com/espressif/esp-who/tree/master/components/modules/imu
  */
 
 // #include "bsp_i2c.h"

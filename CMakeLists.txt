@@ -6,6 +6,10 @@ list( APPEND GENSRCS
     "spi.c"
     "rotary.c"
     "ws2812.c"
+    "qma7981.c"
+    "button_pull.c"     
+    "button.c" 
+    "touch_button.c" 
 )
 # general include files
 list( APPEND GENINCS

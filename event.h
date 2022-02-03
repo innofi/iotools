@@ -1,0 +1,17 @@
+#pragma once
+
+
+#include "esp_event.h"
+
+ESP_EVENT_DECLARE_BASE(IOTOOL_EVENTS);
+
+typedef enum {
+    IOTOOL_BUTTON_LEFT = 1,
+    IOTOOL_BUTTON_MIDDLE,
+    IOTOOL_BUTTON_RIGHT,
+    IOTOOL_ROTARY,
+    IOTOOL_ACCELEROMETER,
+
+    IOTOOL_DISABLE_BLUETOOTH,
+    IOTOOL_DISABLE_COMMANDLINE,
+} iotool_event;
