@@ -8,12 +8,14 @@ list( APPEND GENSRCS
     "ws2812.c"
     "qma7981.c"
     "button_pull.c"     
-    "button.c" 
+    "button_irq.c" 
+    "button_pull.c"
     "touch_button.c" 
 )
 # general include files
 list( APPEND GENINCS
     "." 
+    "../commandline"
 )
 # general dependencies
 list( APPEND GENREQS

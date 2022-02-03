@@ -10,7 +10,6 @@
 #include "driver/gpio.h"
  
 #include "settings.h"
-#include "peripherals.h"
 #include "button_pull.h"
 
 #define TAG "BUTTOND"
