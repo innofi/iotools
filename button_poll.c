@@ -10,7 +10,7 @@
 #include "driver/gpio.h"
  
 #include "settings.h"
-#include "button_pull.h"
+#include "button_poll.h"
 
 #define TAG "BUTTOND"
 
@@ -161,7 +161,7 @@ button_poll_init( unsigned long long pin_select, gpio_pull_mode_t pull_mode, boo
 
     // Initialize global state and queue
     debounce = calloc( pin_count, sizeof( debounce_t ));
-    button_events = xQueueCreate( 4, sizeof( button_event_t ));
+    button_events = xQueueCreate( 8, sizeof( button_event_t ));
 
     // Scan the pin map to determine each pin number, populate the state
     uint32_t idx = 0;

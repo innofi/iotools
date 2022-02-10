@@ -228,6 +228,28 @@ uint8_t i2c_bus_device_get_address(i2c_bus_device_handle_t dev_handle)
     return i2c_device->dev_addr;
 }
 
+// global initialize routine for I2C devices
+i2c_bus_device_handle_t i2c_bus_initialize( uint8_t device_addr ){
+
+    i2c_bus_handle_t i2c_bus_handle;
+	uint32_t clk_speed = 400000;
+
+	i2c_config_t conf = {
+		.mode = I2C_MODE_MASTER,
+		.scl_io_num = I2C_GPIO_SCL,
+		.sda_io_num = I2C_GPIO_SDA,
+		.scl_pullup_en = GPIO_PULLUP_ENABLE,
+		.sda_pullup_en = GPIO_PULLUP_ENABLE,
+		.master.clk_speed = clk_speed,
+	};
+
+	i2c_bus_handle = i2c_bus_create(0, &conf);
+	assert(i2c_bus_handle != NULL);
+
+	return( i2c_bus_device_create( i2c_bus_handle, device_addr, clk_speed ));
+
+}
+
 esp_err_t i2c_bus_read_bytes(i2c_bus_device_handle_t dev_handle, uint8_t mem_address, size_t data_len, uint8_t *data)
 {
     return i2c_bus_read_reg8(dev_handle, mem_address, data_len, data);

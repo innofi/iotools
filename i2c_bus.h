@@ -115,6 +115,11 @@ esp_err_t i2c_bus_device_delete(i2c_bus_device_handle_t *p_dev_handle);
  */
 uint8_t i2c_bus_device_get_address(i2c_bus_device_handle_t dev_handle);
 
+
+// initialize bus for a particular address
+i2c_bus_device_handle_t i2c_bus_initialize( uint8_t device_addr );
+
+
 /**
  * @brief Read single byte from i2c device with 8-bit internal register/memory address
  *

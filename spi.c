@@ -21,6 +21,7 @@
 
 static char TAG[] = "SPI";
 
+// typedef struct spi_device_t* spi_device_handle_t;  ///< Handle for a device on a SPI bus
 static spi_device_handle_t handle_spi;      // SPI handle.
 
 #undef PS_DEBUG
@@ -37,7 +38,7 @@ spi_xferbyte( uint8_t byte ) {
 	trans_desc.tx_data[1] = 0;
 	trans_desc.rx_data[0] = 0;
 
-	if( spi_device_transmit(handle_spi, &trans_desc) != ESP_OK ){
+	if( spi_device_transmit( handle_spi, &trans_desc ) != ESP_OK ){
 		ESP_LOGE(TAG, "byte transfer error");
 	} else {
 		//ESP_LOGI(TAG, "sent 0x%x, got 0x%x", byte, trans_desc.rx_data[0]);
@@ -48,7 +49,7 @@ spi_xferbyte( uint8_t byte ) {
 
 
 void spi_xfer(uint8_t cmd, uint8_t * data, size_t len) {
-  #ifdef PS_DEBUG
+#ifdef PS_DEBUG
   {
     printf( "SPI Write: (");
     printf( "0x%02x", cmd );
@@ -59,14 +60,14 @@ void spi_xfer(uint8_t cmd, uint8_t * data, size_t len) {
     }
     printf( "\n" );
   }
-  #endif
+#endif
 
   cmd = spi_xferbyte(cmd);
   for (size_t i = 0; i < len; i++) {
     data[i] = spi_xferbyte(data[i]);
   }
 
-  #ifdef PS_DEBUG
+#ifdef PS_DEBUG
   {
     printf( "SPI Read: ");
     if (cmd != 0) {
@@ -79,7 +80,7 @@ void spi_xfer(uint8_t cmd, uint8_t * data, size_t len) {
     }
     printf( "\n" );
   }
-  #endif
+#endif
 }
 
 
@@ -94,13 +95,16 @@ void spi_init( void ) {
 	bus_config.miso_io_num   = PIN_MISO; // unused
 	bus_config.quadwp_io_num = -1; // Not used
 	bus_config.quadhd_io_num = -1; // Not used
-	//bus_config.max_transfer_sz = 1; // one byte at a time
+	bus_config.max_transfer_sz = 0; // default size
+	bus_config.flags = SPICOMMON_BUSFLAG_MASTER | SPICOMMON_BUSFLAG_SCLK;
 	ESP_LOGI(TAG, "... Initializing bus.");
-	if( spi_bus_initialize( HSPI_HOST, &bus_config, 1 ) != ESP_OK ){
+	if( spi_bus_initialize( HSPI_HOST, &bus_config, SPI_DMA_DISABLED ) != ESP_OK ){
 		ESP_LOGE(TAG, "... error.");
 	}
 
 	spi_device_interface_config_t dev_config;
+	memset(&dev_config, 0, sizeof(spi_device_interface_config_t));
+
 	dev_config.address_bits     = 0;
 	dev_config.command_bits     = 0;
 	dev_config.dummy_bits       = 0;
@@ -114,7 +118,7 @@ void spi_init( void ) {
 	dev_config.queue_size       = 1;
 	dev_config.pre_cb           = NULL;
 	dev_config.post_cb          = NULL;
-	ESP_LOGI(TAG, "... Adding device bus.");
+	ESP_LOGI(TAG, "... Adding device bus. MOSI:%d, MISO:%d, CLK:%d, CS:%d", PIN_MOSI, PIN_MISO, PIN_CLK, PIN_CS );
 	if( spi_bus_add_device( HSPI_HOST, &dev_config, &handle_spi ) != ESP_OK ){
 		ESP_LOGE(TAG, "... error.");
 	}

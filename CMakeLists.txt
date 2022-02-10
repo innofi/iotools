@@ -7,15 +7,17 @@ list( APPEND GENSRCS
     "rotary.c"
     "ws2812.c"
     "qma7981.c"
-    "button_pull.c"     
     "button_irq.c" 
-    "button_pull.c"
+    "button_poll.c"
     "touch_button.c" 
 )
 # general include files
 list( APPEND GENINCS
     "." 
+    "../../main"
     "../commandline"
+    "../iotools"
+    "../powerstep01"
 )
 # general dependencies
 list( APPEND GENREQS
